@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
     list-style: none;
+    font-family: 'Poppins', sans-serif;
 }
 
 nav {
@@ -49,6 +52,7 @@ nav li {
 }
 
 nav li a {
+    font-weight: bolder;
     font-size: 15px;
     padding: 10px;
     border-radius: 33px;
@@ -57,11 +61,12 @@ nav li a {
 }
 
 nav li a.active {
+    background: linear-gradient(90deg, #e52e71, #ff8a00);
     color: white;
 }
 
 nav li a:hover {
-    background: linear-gradient(90deg, #e52e71, #ff8a00);
+    background: #ff8a00;
     color: white;
 }
 

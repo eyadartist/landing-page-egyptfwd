@@ -34,6 +34,21 @@ window.addEventListener("load", () => {
 
     navList.appendChild(fragment)
 
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = document.querySelectorAll('a');
+            if (entry.intersectionRatio > 0) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    });
+
+    document.querySelectorAll('section').forEach((section) => {
+        observer.observe(section)
+    })
+
 })
 
 // open and close menu 
