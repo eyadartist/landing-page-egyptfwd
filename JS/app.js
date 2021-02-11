@@ -1,59 +1,86 @@
-window.addEventListener("load", () => {
-    // let seclct the nav list
-    const navList = document.getElementById("nav_list")
-    //  we put fragment in order to make a best preformance for the code
-    const fragment = document.createDocumentFragment();
-    //  let select all sections
-    const sections = document.querySelectorAll("section")
-    // let select the ul
-    const ui = document.querySelectorAll("ul")
+// Declaring Varaibles
 
-    // let make a loop
-    sections.forEach((sec) => {
-        // let get the data name from the HTML
-        let data = sec.getAttribute("data-nav")
-        // let create li
-        let li = document.createElement("li")
-        // let get the text from the data-nav
-        let text = document.createTextNode(data)
-        // after that we add menu-link class
-        li.classList.add("menu-link")
-        // let create the link
-        let a = document.createElement("a")
-        // let add event in order to mke the page scroll to acho
+const sections = document.querySelectorAll("section");
 
-        // Make a smooth scroll
-        a.addEventListener("click", () => {
-            sec.scrollIntoView({ behavior: 'smooth' })
-        })
+const navList = document.getElementById('nav_list')
 
-        a.appendChild(text)
-        li.appendChild(a)
-        fragment.appendChild(li)
+const ul = document.querySelectorAll("ul");
+
+const fragment = document.createDocumentFragment();
+
+// let make a loop in order to make the meun
+
+sections.forEach((sec) => {
+
+    let data = sec.getAttribute("data-nav");
+    let text = document.createTextNode(data);
+    let a = document.createElement("a");
+    let li = document.createElement("li");
+    li.classList.add("menu-link");
+
+    // Make a smooth scroll
+    a.addEventListener("click", () => {
+        sec.scrollIntoView({ behavior: 'smooth' });
     })
 
-    navList.appendChild(fragment)
+    // Add herf ID for each nav
 
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            const link = document.querySelectorAll('a');
-            if (entry.intersectionRatio > 0) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
+    a.setAttribute("href", "#" + sec.getAttribute("id"));
+
+    a.appendChild(text);
+    li.appendChild(a);
+    fragment.appendChild(li);
+})
+// Buliding a navigation list
+
+navList.appendChild(fragment);
+
+
+// Active Link
+
+function activeLink(activeSection) {
+
+    let link = document.querySelectorAll('a');
+    let sectionNav = activeSection.getAttribute('data-nav');
+
+    link.forEach((link) => {
+        if (link.textContent === sectionNav) {
+            let link = document.querySelectorAll('a');
+
+            link.forEach((alink) => {
+                alink.classList.remove('active')
+            })
+
+            link.classList.add('active');
+        }
+    })
+}
+
+// Active Section
+
+window.addEventListener("scroll", () => {
+
+    const selctedSec = document.querySelectorAll("section");
+
+    selctedSec.forEach((sec) => {
+        let rect = sec.getBoundingClientRect();
+
+        if (rect.top > 0 && rect.bottom < window.innerHeight) {
+            const active = document.querySelectorAll("active-class")
+            if (active.length > 0) {
+                active[0].classList.remove("active-class")
             }
-        });
+            sec.classList.add('active-class');
+            activeLink(sec);
+        }
     });
 
-    document.querySelectorAll('section').forEach((section) => {
-        observer.observe(section)
-    })
+});
 
-})
 
 // open and close menu 
 
 function toggle() {
-    var menu = document.getElementById("nav_list")
-    menu.classList.toggle("show")
+    var menu = document.getElementById("nav_list");
+    menu.classList.toggle("show");
 }
