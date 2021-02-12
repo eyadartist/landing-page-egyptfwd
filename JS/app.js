@@ -1,86 +1,74 @@
-// Declaring Varaibles
+window.addEventListener('load', () => {
 
-const sections = document.querySelectorAll("section");
+    // Declaring Varaibles
 
-const navList = document.getElementById('nav_list')
+    const sections = document.querySelectorAll("section");
 
-const ul = document.querySelectorAll("ul");
+    const navList = document.getElementById('nav_list')
 
-const fragment = document.createDocumentFragment();
+    const fragment = document.createDocumentFragment();
 
-// let make a loop in order to make the meun
+    // let make a loop in order to make the meun
 
-sections.forEach((sec) => {
+    sections.forEach((sec) => {
 
-    let data = sec.getAttribute("data-nav");
-    let text = document.createTextNode(data);
-    let a = document.createElement("a");
-    let li = document.createElement("li");
-    li.classList.add("menu-link");
+        let data = sec.getAttribute("data-nav");
+        let text = document.createTextNode(data);
+        let a = document.createElement("a");
+        let li = document.createElement("li");
+        li.classList.add("menu-link");
 
-    // Make a smooth scroll
-    a.addEventListener("click", () => {
-        sec.scrollIntoView({ behavior: 'smooth' });
+        // Make a smooth scroll
+        a.addEventListener("click", () => {
+            sec.scrollIntoView({ behavior: 'smooth' });
+        })
+
+        // Add herf ID for each nav
+
+        a.setAttribute("href", "#" + sec.getAttribute("id"));
+
+        a.appendChild(text);
+        li.appendChild(a);
+        fragment.appendChild(li);
     })
 
-    // Add herf ID for each nav
+    // Buliding a navigation list
 
-    a.setAttribute("href", "#" + sec.getAttribute("id"));
-
-    a.appendChild(text);
-    li.appendChild(a);
-    fragment.appendChild(li);
-})
-// Buliding a navigation list
-
-navList.appendChild(fragment);
+    navList.appendChild(fragment);
 
 
-// Active Link
+    // Active Link
 
-function activeLink(activeSection) {
+    window.addEventListener("scroll", () => {
+        const Menulink = document.querySelectorAll('a');
 
-    let link = document.querySelectorAll('a');
-    let sectionNav = activeSection.getAttribute('data-nav');
+        let index = sections.length;
+        while (--index && window.scrollY + 50 < sections[index].offsetTop) { }
 
-    link.forEach((link) => {
-        if (link.textContent === sectionNav) {
-            let link = document.querySelectorAll('a');
+        Menulink.forEach((links) => links.classList.remove('active'))
+        Menulink[index].classList.add('active');
 
-            link.forEach((alink) => {
-                alink.classList.remove('active')
-            })
-
-            link.classList.add('active');
-        }
-    })
-}
-
-// Active Section
-
-window.addEventListener("scroll", () => {
-
-    const selctedSec = document.querySelectorAll("section");
-
-    selctedSec.forEach((sec) => {
-        let rect = sec.getBoundingClientRect();
-
-        if (rect.top > 0 && rect.bottom < window.innerHeight) {
-            const active = document.querySelectorAll("active-class")
-            if (active.length > 0) {
-                active[0].classList.remove("active-class")
-            }
-            sec.classList.add('active-class');
-            activeLink(sec);
-        }
     });
 
+
+    // Active Section
+
+    window.addEventListener("scroll", () => {
+        const selctedSec = document.querySelectorAll("section");
+
+        let index = sections.length;
+        while (--index && window.scrollY + 50 < sections[index].offsetTop) { }
+
+        selctedSec.forEach((section) => section.classList.remove('active-class'))
+        selctedSec[index].classList.add('active-class');
+
+    });
+
+
+    // open and close menu 
+
+    function toggle() {
+        var menu = document.getElementById("nav_list");
+        menu.classList.toggle("show");
+    };
 });
-
-
-// open and close menu 
-
-function toggle() {
-    var menu = document.getElementById("nav_list");
-    menu.classList.toggle("show");
-}

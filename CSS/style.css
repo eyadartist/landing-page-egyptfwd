@@ -102,6 +102,7 @@ section .contianer {
     padding: 95px;
     border-radius: 33px;
     z-index: 1000;
+    transition: .7s ease-in-out;
 }
 .active-class .contianer {
     background: #2c2c2c50;
