@@ -68,7 +68,7 @@ window.addEventListener('load', () => {
     // open and close menu 
 
     function toggle() {
-        var menu = document.getElementById("nav_list");
+        let menu = document.getElementById("nav_list");
         menu.classList.toggle("show");
     };
 });
